@@ -43,6 +43,11 @@ android {
             }
         }
     }
+    
+    test {
+        systemProperty 'MODELS_PATH', System.getProperty('MODELS_PATH')
+        systemProperty 'device', System.getProperty('device')
+    }
 }
     
 dependencies {

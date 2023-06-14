@@ -27,6 +27,8 @@ jobs:
         git clone --recurse-submodules -j$(nproc --all) https://github.com/rajatkrishna/openvino_contrib -b refactor/java_api-project-structure  --depth 1
         git clone --recurse-submodules -j$(nproc --all) https://github.com/openvinotoolkit/openvino -b releases/2023/0 --depth 1
         git clone https://github.com/oneapi-src/oneTBB --depth 1
+        git clone https://github.com/openvinotoolkit/testdata -b releases/2023/0 --depth 1
+        cd testdata && git lfs pull && cd ..
         cd openvino && echo "https://github.com/openvinotoolkit/openvino/commit/$(git rev-parse HEAD)" > ../versions.txt && cd ..
         cd openvino_contrib && echo "https://github.com/rajatkrishna/openvino_contrib/commit/$(git rev-parse HEAD)" >> ../versions.txt && cd ..
         cd oneTBB && echo "https://github.com/oneapi-src/oneTBB/commit/$(git rev-parse HEAD)" >> ../versions.txt && cd ..
@@ -200,7 +202,7 @@ jobs:
 
         mv $INTEL_OPENVINO_DIR/runtime/lib/intel64 $INTEL_OPENVINO_DIR/runtime/lib/x86_64
 
-        ../../../gradle-7.4/bin/gradle clean build -x lint --info
+        ../../../gradle-7.4/bin/gradle clean build -x lint -DMODELS_PATH=../../../testdata -Ddevice=CPU --info
       working-directory: openvino_contrib/modules/java_api
 
     - name: Upload (x86_64)
