@@ -202,7 +202,7 @@ jobs:
 
         mv $INTEL_OPENVINO_DIR/runtime/lib/intel64 $INTEL_OPENVINO_DIR/runtime/lib/x86_64
 
-        ../../../gradle-7.4/bin/gradle clean build -x lint -DMODELS_PATH=../../../testdata -Ddevice=CPU --info
+        ../../../gradle-7.4/bin/gradle clean build -x lint -Prun_tests -DMODELS_PATH=../../../testdata -Ddevice=CPU --info
       working-directory: openvino_contrib/modules/java_api
 
     - name: Upload (x86_64)

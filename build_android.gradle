@@ -44,7 +44,16 @@ android {
         }
     }
     
-    test {
+    // testOptions {
+    //     unitTests.all {
+    //         systemProperty 'MODELS_PATH', System.getProperty('MODELS_PATH')
+    //         systemProperty 'device', System.getProperty('device')
+    //     }
+    // }
+    task test(type: Test) { 
+        onlyIf {
+            project.hasProperty('run_tests')
+        }
         systemProperty 'MODELS_PATH', System.getProperty('MODELS_PATH')
         systemProperty 'device', System.getProperty('device')
     }
