@@ -45,7 +45,10 @@ android {
             }
         }
 
-        test {
+        androidTest {
+            java {
+                srcDirs = ["src/test/java"]
+            }
             jniLibs.srcDirs = [nativeLibs]
             resources {
                 srcDirs = [nativeLibs + "/arm64-v8a", nativeLibs + "/x86_64"]  // For plugins.xml
