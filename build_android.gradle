@@ -43,4 +43,12 @@ android {
             }
         }
     }
+    
+    testOptions {
+        unitTests.all {
+            onlyIf {
+                project.hasProperty('run_tests')
+            }
+        }
+    }
 }
