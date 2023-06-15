@@ -19,29 +19,6 @@ allprojects {
 import org.gradle.internal.os.OperatingSystem
 
 def nativeLibs = System.getenv('INTEL_OPENVINO_DIR') + "/runtime/lib"
-def ovNativeLibs = ""
-
-def arch = System.getProperty("os.arch")
-def ov_arch = arch;
-println 'CPU architecture: ' + arch
-
-if (arch == "x86_64" || arch == "amd64" || arch == "x64" || arch == "x86-64") {
-    ov_arch = "intel64";
-} else if (arch == "aarch64" || arch == "arm64" || arch == "arm-v8") {
-    ov_arch = "aarch64";
-} else if (arch == "arm" || arch == "arm-v7" || arch == "armv7" || arch == "arm32") {
-    ov_arch = "armhf";
-}
-
-if (OperatingSystem.current().isMacOsX()) {
-    ovNativeLibs = System.getenv('INTEL_OPENVINO_DIR') + "/runtime/lib/" + ov_arch + "/Release"
-} else if (OperatingSystem.current().isLinux()) {
-    ovNativeLibs = System.getenv('INTEL_OPENVINO_DIR') + "/runtime/lib/" + ov_arch
-} else if (OperatingSystem.current().isWindows()) {
-    ovNativeLibs = System.getenv('INTEL_OPENVINO_DIR') + "/runtime/bin/" + ov_arch + "/Release"
-} else {
-    logger.warn('Unknown operating system!')
-}
 
 android {
     compileSdkVersion 30
@@ -62,14 +39,14 @@ android {
             java {
                 srcDirs = ["src/main/java"]
             }
-            jniLibs.srcDirs = [ovNativeLibs]
+            jniLibs.srcDirs = [nativeLibs + "/arm64-v8a", nativeLibs + "/x86_64"]
             resources {
                 srcDirs = [nativeLibs + "/arm64-v8a", nativeLibs + "/x86_64"]  // For plugins.xml
             }
         }
 
         test {
-            jniLibs.srcDirs = [ovNativeLibs]
+            jniLibs.srcDirs = [nativeLibs + "/arm64-v8a", nativeLibs + "/x86_64"]
             resources {
                 srcDirs = [nativeLibs + "/arm64-v8a", nativeLibs + "/x86_64"]  // For plugins.xml
             }
