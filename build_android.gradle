@@ -52,3 +52,8 @@ android {
         }
     }
 }
+
+dependencies {
+    testImplementation "junit:junit:4.13.1"
+    testImplementation "org.hamcrest:hamcrest-core:1.3"
+}
